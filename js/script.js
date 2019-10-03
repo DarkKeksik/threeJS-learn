@@ -6,6 +6,25 @@ window.onload = () => {
     canvas.setAttribute("width", width);
     canvas.setAttribute("height", height);
     
+    // Объект сферы
+    let ball = {
+        positionX: 0,
+        positionY: 0,
+        positionZ: 0,
+        
+        rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0
+    }
+    var gui = new dat.gui.GUI();
+    gui.add(ball, "positionY").min(-10).max(10).step(0.1);
+    gui.add(ball, "positionX").min(-10).max(10).step(0.1);
+    gui.add(ball, "positionZ").min(-10).max(10).step(0.1);
+    
+    gui.add(ball, "rotationX").min(-0.2).max(0.2).step(0.001);
+    gui.add(ball, "rotationY").min(-0.2).max(0.2).step(0.001);
+    gui.add(ball, "rotationZ").min(-0.2).max(0.2).step(0.001);
+    
     let renderer = new THREE.WebGLRenderer({canvas: canvas});
     renderer.setClearColor(0x000000);
     
@@ -32,8 +51,14 @@ window.onload = () => {
     scene.add(mesh);
 
     let loop = () => {
-        mesh.rotation.y += Math.PI / 500;
-        mesh.rotation.x += Math.PI / 500;
+        mesh.position.x += ball.positionX;
+        mesh.position.y += ball.positionY;
+        mesh.position.z += ball.positionZ;
+        
+        mesh.rotation.x += ball.rotationX;
+        mesh.rotation.y += ball.rotationY;
+        mesh.rotation.z += ball.rotationZ;
+
         
         renderer.render(scene, camera);
         requestAnimationFrame(()=>{
