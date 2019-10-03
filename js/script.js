@@ -6,7 +6,7 @@ window.onload = () => {
     canvas.setAttribute("width", width);
     canvas.setAttribute("height", height);
     
-    let rendered = new THREE.WebGLRenderer({canvas: canvas});
+    let renderer = new THREE.WebGLRenderer({canvas: canvas});
     renderer.setClearColor(0x000000);
     
     let scene = new THREE.Scene();
@@ -20,5 +20,25 @@ window.onload = () => {
     scene.add(light);
     
     // Ширина, высота и кол-во фрагментов
-    let geometry = new THREE.PlaneGeometry(300, 300, 12, 12);
+    let geometry = new THREE.SphereGeometry(200, 12, 12);
+    // wireframe - Обтянутый материалом или нет
+    let material = new  THREE.MeshBasicMaterial({color: 0xffffff, vertexColors: THREE.FaceColors});
+    
+    for (let i = 0; i < geometry.faces.length; i++) {
+        geometry.faces[i].color.setRGB(Math.random(), Math.random(), Math.random());
+    }
+    
+    let mesh = new THREE.Mesh(geometry, material);    
+    scene.add(mesh);
+
+    let loop = () => {
+        mesh.rotation.y += Math.PI / 500;
+        mesh.rotation.x += Math.PI / 500;
+        
+        renderer.render(scene, camera);
+        requestAnimationFrame(()=>{
+            loop();
+        });
+    }
+    loop();
 }
