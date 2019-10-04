@@ -41,11 +41,13 @@ window.onload = () => {
     // Ширина, высота и кол-во фрагментов
     let geometry = new THREE.SphereGeometry(200, 12, 12);
     // wireframe - Обтянутый материалом или нет
-    let material = new  THREE.MeshBasicMaterial({color: 0xffffff, vertexColors: THREE.FaceColors});
+//    let material = new  THREE.MeshBasicMaterial({color: 0xffffff, vertexColors: THREE.FaceColors});
+//    for (let i = 0; i < geometry.faces.length; i++) {
+//        geometry.faces[i].color.setRGB(Math.random(), Math.random(), Math.random());
+//    }
     
-    for (let i = 0; i < geometry.faces.length; i++) {
-        geometry.faces[i].color.setRGB(Math.random(), Math.random(), Math.random());
-    }
+    const loader = new THREE.TextureLoader();
+    let material = new  THREE.MeshBasicMaterial({map: loader.load('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCIDPAPPzptBL8iHh0FT67Av1NbczEW44m_WNswbwLjKLSzXPP')});
     
     let mesh = new THREE.Mesh(geometry, material);    
     scene.add(mesh);
